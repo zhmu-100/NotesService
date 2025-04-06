@@ -22,6 +22,12 @@ repositories {
 dependencies {
     // This dependency is used by the application.
     implementation(libs.guava)
+    implementation("io.ktor:ktor-server-core-jvm:2.2.4")
+    implementation("io.ktor:ktor-server-netty-jvm:2.2.4")
+    implementation("ch.qos.logback:logback-classic:1.2.11")
+
+    implementation("io.ktor:ktor-server-content-negotiation-jvm:2.2.4")
+    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:2.2.4")
 }
 
 testing {
