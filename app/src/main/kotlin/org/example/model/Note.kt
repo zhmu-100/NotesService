@@ -1,7 +1,10 @@
 package org.example.model
 
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.Serializable
-import java.time.Instant
 
 /**
  * Data class, который описывает заметку
@@ -15,9 +18,9 @@ import java.time.Instant
  */
 @Serializable
 data class Note(
-  val id: String,
+  val id: String = "",
   val userId: String,
   val title: String,
   val content: String,
-  val date: Instant
+  val date: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.UTC)
 )

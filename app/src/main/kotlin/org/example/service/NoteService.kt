@@ -3,7 +3,9 @@ package org.example.service
 import org.example.model.Note
 import org.example.actions.INoteAction
 import org.example.actions.NoteAction
-import java.time.Instant
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import java.util.UUID
 
 /**
@@ -20,7 +22,7 @@ class NoteService(private val actions: INoteAction = NoteAction()) : INoteServic
   override suspend fun createNote(note: Note): Note {
     val newNote = note.copy(
       id = UUID.randomUUID().toString(),
-      date = Instant.now()
+      date = Clock.System.now().toLocalDateTime(TimeZone.UTC)
     )
     return actions.createNote(newNote)
   }
@@ -54,7 +56,9 @@ class NoteService(private val actions: INoteAction = NoteAction()) : INoteServic
    * @return Обновленная заметка
    */
   override suspend fun updateNote(note: Note): Note? {
-    val updatedNote = note.copy(date = Instant.now())
+    val updatedNote = note.copy(
+      date = Clock.System.now().toLocalDateTime(TimeZone.UTC) // <-- поправили
+    )
     return actions.updateNote(updatedNote)
   }
 

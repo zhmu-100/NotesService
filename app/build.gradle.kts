@@ -10,6 +10,8 @@ plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     alias(libs.plugins.kotlin.jvm)
     id("org.jetbrains.dokka") version "1.9.20"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22" // добавлено
+
 
 
     // Apply the application plugin to add support for building a CLI application in Java.
@@ -30,6 +32,10 @@ dependencies {
 
     implementation("io.ktor:ktor-server-content-negotiation-jvm:2.2.4")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:2.2.4")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
+
 }
 
 testing {
