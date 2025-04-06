@@ -7,16 +7,13 @@
  */
 
 plugins {
-    // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
-    alias(libs.plugins.kotlin.jvm)
+    kotlin("jvm") version "1.8.10"
+    kotlin("plugin.serialization") version "1.8.10"
     id("org.jetbrains.dokka") version "1.9.20"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22" // добавлено
-
-
-
-    // Apply the application plugin to add support for building a CLI application in Java.
+    id("com.ncorti.ktfmt.gradle") version "0.11.0"
     application
 }
+
 
 repositories {
     // Use Maven Central for resolving dependencies.

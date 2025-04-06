@@ -1,15 +1,17 @@
 package org.example.service
 
-import org.example.model.Note
-import org.example.actions.INoteAction
-import org.example.actions.NoteAction
+import java.util.UUID
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import java.util.UUID
+import org.example.actions.INoteAction
+import org.example.actions.NoteAction
+import org.example.model.Note
 
 /**
- * Реализация интерфейса [INoteService] для бизнес логики работы с заметками. Существование данного класса под вопросом, но наверное хорошо разделять обращения к БД из [NoteAction] и бизнес логику...хотя из бизнес логики здесь 2 строки...зачем я это пишу...я не понимаю
+ * Реализация интерфейса [INoteService] для бизнес логики работы с заметками. Существование данного
+ * класса под вопросом, но наверное хорошо разделять обращения к БД из [NoteAction] и бизнес
+ * логику...хотя из бизнес логики здесь 2 строки...зачем я это пишу...я не понимаю
  */
 class NoteService(private val actions: INoteAction) : INoteService {
 
@@ -20,10 +22,10 @@ class NoteService(private val actions: INoteAction) : INoteService {
    * @return Созданная заметка с UUID и датой
    */
   override suspend fun createNote(note: Note): Note {
-    val newNote = note.copy(
-      id = UUID.randomUUID().toString(),
-      date = Clock.System.now().toLocalDateTime(TimeZone.UTC)
-    )
+    val newNote =
+        note.copy(
+            id = UUID.randomUUID().toString(),
+            date = Clock.System.now().toLocalDateTime(TimeZone.UTC))
     return actions.createNote(newNote)
   }
 
@@ -50,15 +52,17 @@ class NoteService(private val actions: INoteAction) : INoteService {
   }
 
   /**
-   * Обновляет существующую заметку. А вот еще бизнес логика, целая одна строка. Вау.... Обновляем дату, круто...
+   * Обновляет существующую заметку. А вот еще бизнес логика, целая одна строка. Вау.... Обновляем
+   * дату, круто...
    *
    * @param note Обновленная заметка. ID должен совпадать
    * @return Обновленная заметка
    */
   override suspend fun updateNote(note: Note): Note? {
-    val updatedNote = note.copy(
-      date = Clock.System.now().toLocalDateTime(TimeZone.UTC) // <-- поправили
-    )
+    val updatedNote =
+        note.copy(
+            date = Clock.System.now().toLocalDateTime(TimeZone.UTC) // <-- поправили
+            )
     return actions.updateNote(updatedNote)
   }
 
