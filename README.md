@@ -60,3 +60,15 @@ message DeleteNoteRequest {
   string user_id = 2;
 }
 ```
+
+Таблица заметок
+
+```sql
+create table notes (
+    id varchar(36) PRIMary key,
+    userid varchar(255) not null,
+    title text not null,
+    content text not null,
+    date varchar(255) not null
+);
+```

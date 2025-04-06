@@ -11,7 +11,7 @@ import java.util.UUID
 /**
  * Реализация интерфейса [INoteService] для бизнес логики работы с заметками. Существование данного класса под вопросом, но наверное хорошо разделять обращения к БД из [NoteAction] и бизнес логику...хотя из бизнес логики здесь 2 строки...зачем я это пишу...я не понимаю
  */
-class NoteService(private val actions: INoteAction = NoteAction()) : INoteService {
+class NoteService(private val actions: INoteAction) : INoteService {
 
   /**
    * Создаент новую заметку. Из бизнес логики здесь те самые 2 строки, создание UUID и даты...

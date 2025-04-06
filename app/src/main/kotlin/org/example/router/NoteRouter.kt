@@ -5,6 +5,7 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.example.actions.NoteAction
 import org.example.model.Note
 import org.example.service.INoteService
 import org.example.service.NoteService
@@ -19,7 +20,7 @@ import org.example.service.NoteService
  * - PUT /notebook/notes/{id} - Обновить заметку
  * - DELETE /notebook/notes/{id} - Удалить заметку
  */
-fun Application.registerNoteRoutes(noteService: INoteService = NoteService()) {
+fun Application.registerNoteRoutes(noteService: INoteService) {
   routing {
     route("/notebook/notes") {
       /**

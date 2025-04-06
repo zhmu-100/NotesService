@@ -36,6 +36,12 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
 
+    implementation("io.ktor:ktor-client-core-jvm:2.2.4")
+    implementation("io.ktor:ktor-client-cio-jvm:2.2.4")
+    implementation("io.ktor:ktor-client-content-negotiation-jvm:2.2.4")
+    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:2.2.4")
+
+
 }
 
 testing {

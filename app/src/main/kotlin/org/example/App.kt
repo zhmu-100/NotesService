@@ -6,7 +6,9 @@ import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
+import org.example.actions.NoteAction
 import org.example.router.registerNoteRoutes
+import org.example.service.NoteService
 
 /**
  * Точка входа в приложение
@@ -16,6 +18,10 @@ import org.example.router.registerNoteRoutes
 fun main() {
   embeddedServer(Netty, port = 8001) {
     install(ContentNegotiation) { json() }
-    registerNoteRoutes()
+
+    val noteAction = NoteAction(environment.config)
+    val noteService = NoteService(noteAction)
+
+    registerNoteRoutes(noteService)
   }.start(wait = true)
 }
