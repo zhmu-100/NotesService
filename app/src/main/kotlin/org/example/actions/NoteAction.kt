@@ -95,7 +95,15 @@ class NoteAction(private val config: ApplicationConfig) : INoteAction {
    */
   @Serializable data class DbResponse(val success: Boolean? = null, val error: String? = null)
 
-  /** Представление строки из таблицы, немного костыль */
+  /**
+   * Строка заметки из БД
+   *
+   * @property id Идентификатор заметки
+   * @property userid Идентификатор пользователя
+   * @property title Заголовок заметки
+   * @property content Содержимое заметки
+   * @property date Дата создания заметки
+   */
   @Serializable
   data class DbNoteRow(
       val id: String,

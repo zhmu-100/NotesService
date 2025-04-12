@@ -23,6 +23,12 @@ import org.example.model.Notification
 import org.example.model.NotificationActionEnum
 import org.example.model.NotificationSnoozeEnum
 
+/**
+ * Реализация интерфейса [INotificationAction]. Может работать с локальной БД или через API Gateway
+ *
+ * @see INotificationAction
+ * @property config Конфигурация приложения, используется для определения адреса БД
+ */
 class NotificationAction(private val config: ApplicationConfig) : INotificationAction {
 
   private val dbMode = config.propertyOrNull("ktor.database.mode")?.getString() ?: "LOCAL"
@@ -38,8 +44,21 @@ class NotificationAction(private val config: ApplicationConfig) : INotificationA
 
   private val httpClient = HttpClient { install(ContentNegotiation) { json() } }
 
+  /**
+   * Запрос на создание записи в БД
+   *
+   * @property table Название таблицы
+   * @property data Данные, которые нужно вставить
+   */
   @Serializable data class DbCreateRequest(val table: String, val data: Map<String, String>)
 
+  /**
+   * Запрос на чтение данных из БД
+   *
+   * @property table Название таблицы
+   * @property columns Список столбцов, которые необходимо прочитать, в данном случае читаем все
+   * @property filters Фильтры для запроса
+   */
   @Serializable
   data class DbReadRequest(
       val table: String,
@@ -47,6 +66,14 @@ class NotificationAction(private val config: ApplicationConfig) : INotificationA
       val filters: Map<String, String>? = null
   )
 
+  /**
+   * Запрос на обновление данных в БД.
+   *
+   * @property table Название таблицы
+   * @property data Новые значения
+   * @property condition Условие обновления
+   * @property conditionParams Параметры для условия
+   */
   @Serializable
   data class DbUpdateRequest(
       val table: String,
@@ -55,6 +82,13 @@ class NotificationAction(private val config: ApplicationConfig) : INotificationA
       val conditionParams: List<String>
   )
 
+  /**
+   * Запрос на удаление данных в БД.
+   *
+   * @property table Название таблицы
+   * @property condition Условие удаления
+   * @property conditionParams Параметры условия
+   */
   @Serializable
   data class DbDeleteRequest(
       val table: String,
@@ -62,8 +96,24 @@ class NotificationAction(private val config: ApplicationConfig) : INotificationA
       val conditionParams: List<String>
   )
 
+  /**
+   * Ответ от БД
+   *
+   * @property success Успех операции
+   * @property error Сообщение об ошибке
+   */
   @Serializable data class DbResponse(val success: Boolean? = null, val error: String? = null)
 
+  /**
+   * Строка таблицы уведомлений
+   *
+   * @property id ID уведомления
+   * @property userid ID пользователя
+   * @property title Заголовок уведомления
+   * @property description Описание уведомления
+   * @property create_date Дата создания уведомления
+   * @property notification_date Дата уведомления
+   */
   @Serializable
   data class DbNotificationRow(
       val id: String,
@@ -74,6 +124,13 @@ class NotificationAction(private val config: ApplicationConfig) : INotificationA
       val notification_date: String
   )
 
+  /**
+   * Создает новое уведомление
+   *
+   * @param notification Уведомление для сохранения
+   * @return Сохраненное уведомление
+   * @throws Exception Если не удалось сохранить уведомление
+   */
   override suspend fun createNotification(notification: Notification): Notification =
       withContext(Dispatchers.IO) {
         val requestBody =
@@ -103,6 +160,12 @@ class NotificationAction(private val config: ApplicationConfig) : INotificationA
         }
       }
 
+  /**
+   * Получает уведомление по его ID
+   *
+   * @param id ID уведомления
+   * @return Уведомление или null, если оно не найдено
+   */
   override suspend fun getNotification(id: String): Notification? =
       withContext(Dispatchers.IO) {
         val requestBody =
@@ -127,6 +190,14 @@ class NotificationAction(private val config: ApplicationConfig) : INotificationA
         return@withContext row.toModel()
       }
 
+  /**
+   * Получает список уведомлений для заданного пользователя с учетом пейджинга
+   *
+   * @param userId ID пользователя
+   * @param page Номер страницы (начиная с 1)
+   * @param pageSize Количество записей на странице
+   * @return Список уведомлений
+   */
   override suspend fun listNotifications(
       userId: String,
       page: Int,
@@ -158,6 +229,16 @@ class NotificationAction(private val config: ApplicationConfig) : INotificationA
         return@withContext sliced.map { it.toModel() }
       }
 
+  /**
+   * Выполняет действие над уведомлением
+   *
+   * @param id ID уведомления
+   * @param userId ID пользователя
+   * @param action Действие, которое нужно выполнить [NotificationActionEnum]
+   * @param snoozeDuration Время, на которое нужно отложить уведомление [NotificationSnoozeEnum]
+   * @return Уведомление или null, если оно не найдено
+   * @throws Exception Если не удалось выполнить действие
+   */
   override suspend fun performNotificationAction(
       id: String,
       userId: String,
@@ -214,6 +295,12 @@ class NotificationAction(private val config: ApplicationConfig) : INotificationA
         }
       }
 
+  /**
+   * Преобразует строку таблицы уведомлений в модель уведомления
+   *
+   * @receiver DbNotificationRow Строка таблицы уведомлений
+   * @return Notification Модель уведомления
+   */
   private fun DbNotificationRow.toModel(): Notification {
     return Notification(
         id = this.id,
@@ -224,6 +311,13 @@ class NotificationAction(private val config: ApplicationConfig) : INotificationA
         notificationDate = LocalDateTime.parse(this.notification_date))
   }
 
+  /**
+   * Добавляет время задержки к дате уведомления
+   *
+   * @receiver LocalDateTime Дата уведомления
+   * @param snooze Время задержки
+   * @return LocalDateTime Новая дата уведомления
+   */
   private fun LocalDateTime.plusSnooze(snooze: NotificationSnoozeEnum?): LocalDateTime {
     if (snooze == null) return this
 

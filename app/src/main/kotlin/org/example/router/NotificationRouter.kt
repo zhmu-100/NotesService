@@ -11,15 +11,35 @@ import org.example.model.NotificationActionEnum
 import org.example.model.NotificationSnoozeEnum
 import org.example.service.INotificationService
 
+/**
+ * REST роутер для работы с уведомлениями
+ *
+ * Эндпоинты:
+ * - GET /notebook/notifications/{id} - Получить уведомление по ID
+ * - GET /notebook/notifications - Получить список уведомлений с постраничной навигацией
+ * - POST /notebook/notifications - Создать новое уведомление
+ * - POST /notebook/notifications/{id}/action - Выполнить действие над уведомлением
+ */
 fun Application.registerNotificationRoutes(notificationService: INotificationService) {
   routing {
     route("/notebook/notifications") {
+      /**
+       * Создание нового уведомления
+       *
+       * Тело запроса - JSON заметки (согласно модели {@Notification} без id) Возвращается созданная
+       * заметка с id и датой создания
+       */
       post {
         val notification = call.receive<Notification>()
         val createNotification = notificationService.createNotification(notification)
         call.respond(createNotification)
       }
 
+      /**
+       * Получить уведомление по ID
+       *
+       * ID уведомления указан в URL Если уведомление не найдено, кушаем 404
+       */
       get("{id}") {
         val id =
             call.parameters["id"]
@@ -33,6 +53,14 @@ fun Application.registerNotificationRoutes(notificationService: INotificationSer
         }
       }
 
+      /**
+       * Получает список уведомлений для пользователя с постраничной навигацией
+       *
+       * Параметры query:
+       * - user_id - ID пользователя
+       * - page - номер страницы (по умолчанию 1)
+       * - page_size - количество уведомлений на странице (по умолчанию 10)
+       */
       get {
         val userId = call.request.queryParameters["user_id"] ?: ""
         val page = call.request.queryParameters["page"]?.toIntOrNull() ?: 1
@@ -41,6 +69,15 @@ fun Application.registerNotificationRoutes(notificationService: INotificationSer
         call.respond(notifications)
       }
 
+      /**
+       * Выполнить действие над уведомлением
+       *
+       * Принимает:
+       * - userId - ID пользователя
+       * - action - действие см [NotificationActionEnum]
+       * - snoozeDuration - время, на которое нужно отложить уведомление (опционально, см
+       * [NotificationSnoozeEnum])
+       */
       post("{id}/action") {
         val id =
             call.parameters["id"]
@@ -66,6 +103,7 @@ fun Application.registerNotificationRoutes(notificationService: INotificationSer
   }
 }
 
+/** Запрос на выполнение действия над уведомлением Не помню, зачем он нужен, но пусть будет */
 @Serializable
 data class NotificationActionRequest(
     val userId: String,

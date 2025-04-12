@@ -4,6 +4,15 @@ import org.example.model.Notification
 import org.example.model.NotificationActionEnum
 import org.example.model.NotificationSnoozeEnum
 
+/**
+ * Интерфейс **бизнес** логики работы с уведомлениями.
+ *
+ * Доступные операции
+ * - Создать уведомление
+ * - Получить уведомление по ID
+ * - Получить список уведомлений пользователя
+ * - Выполнить действие с уведомлением
+ */
 interface INotificationService {
 
   suspend fun createNotification(notification: Notification): Notification
