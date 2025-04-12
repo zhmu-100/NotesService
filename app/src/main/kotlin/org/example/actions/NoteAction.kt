@@ -11,7 +11,12 @@ import io.ktor.server.config.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDateTime
-import kotlinx.serialization.Serializable
+import org.example.dto.DbCreateRequest
+import org.example.dto.DbDeleteRequest
+import org.example.dto.DbNoteRow
+import org.example.dto.DbReadRequest
+import org.example.dto.DbResponse
+import org.example.dto.DbUpdateRequest
 import org.example.model.Note
 
 /**
@@ -34,84 +39,6 @@ class NoteAction(private val config: ApplicationConfig) : INoteAction {
       }
 
   private val httpClient = HttpClient { install(ContentNegotiation) { json() } }
-
-  /**
-   * Запрос на создание записи в БД
-   *
-   * @property table Название таблицы
-   * @property data Данные, которые нужно вставить
-   */
-  @Serializable data class DbCreateRequest(val table: String, val data: Map<String, String>)
-
-  /**
-   * Запрос на чтение данных из БД
-   *
-   * @property table Название таблицы
-   * @property columns Список столбцов, которые необходимо прочитать, в данном случае читаем все
-   * @property filters Фильтры для запроса
-   */
-  @Serializable
-  data class DbReadRequest(
-      val table: String,
-      val columns: List<String> = listOf("*"),
-      val filters: Map<String, String>? = null
-  )
-
-  /**
-   * Запрос на обновление данных в БД.
-   *
-   * @property table Название таблицы
-   * @property data Новые значения
-   * @property condition Условие обновления
-   * @property conditionParams Параметры для условия
-   */
-  @Serializable
-  data class DbUpdateRequest(
-      val table: String,
-      val data: Map<String, String>,
-      val condition: String,
-      val conditionParams: List<String>
-  )
-
-  /**
-   * Запрос на удаление записи из БД
-   *
-   * @property table Название таблицы
-   * @property condition Условие удаления
-   * @property conditionParams Параметры условия
-   */
-  @Serializable
-  data class DbDeleteRequest(
-      val table: String,
-      val condition: String,
-      val conditionParams: List<String>
-  )
-
-  /**
-   * Ответ от БД на операции создания/обновления/удаления
-   *
-   * @property success Признак успешности
-   * @property error Сообщение об ошибке, если есть
-   */
-  @Serializable data class DbResponse(val success: Boolean? = null, val error: String? = null)
-
-  /**
-   * Строка заметки из БД
-   *
-   * @property id Идентификатор заметки
-   * @property userid Идентификатор пользователя
-   * @property title Заголовок заметки
-   * @property content Содержимое заметки
-   * @property date Дата создания заметки
-   */
-  @Serializable
-  data class DbNoteRow(
-      val id: String,
-      val userid: String,
-      val title: String,
-      val content: String,
-      val date: String
-  )
 
   /**
    * Создает новую заметку
