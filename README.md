@@ -72,3 +72,16 @@ create table notes (
     date varchar(255) not null
 );
 ```
+
+Таблица нотификатионов
+
+```sql
+create table notifications (
+    id varchar(36) PRIMary key,
+    userid varchar(255) not null,
+    title text not null,
+    description text not null,
+    create_date varchar(255) not null,
+    notification_date varchar(255) not null
+);
+```

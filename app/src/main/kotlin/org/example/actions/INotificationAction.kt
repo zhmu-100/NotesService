@@ -13,9 +13,9 @@ interface INotificationAction {
   suspend fun listNotifications(userId: String, page: Int, pageSize: Int): List<Notification>
 
   suspend fun performNotificationAction(
-    id: String,
-    userId: String,
-    action: NotificationActionEnum,
-    snoozeDuration: NotificationSnoozeEnum? = null
+      id: String,
+      userId: String,
+      action: NotificationActionEnum,
+      snoozeDuration: NotificationSnoozeEnum? = null
   ): Notification?
 }
