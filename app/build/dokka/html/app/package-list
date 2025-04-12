@@ -1,0 +1,41 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:org.example.actions////PointingToDeclaration/app/org.example.actions/index.html
+$dokka.location:org.example.actions/INoteAction///PointingToDeclaration/app/org.example.actions/-i-note-action/index.html
+$dokka.location:org.example.actions/INoteAction/createNote/#org.example.model.Note/PointingToDeclaration/app/org.example.actions/-i-note-action/create-note.html
+$dokka.location:org.example.actions/INoteAction/deleteNote/#kotlin.String#kotlin.String/PointingToDeclaration/app/org.example.actions/-i-note-action/delete-note.html
+$dokka.location:org.example.actions/INoteAction/getNote/#kotlin.String/PointingToDeclaration/app/org.example.actions/-i-note-action/get-note.html
+$dokka.location:org.example.actions/INoteAction/listNotes/#kotlin.String#kotlin.Int#kotlin.Int/PointingToDeclaration/app/org.example.actions/-i-note-action/list-notes.html
+$dokka.location:org.example.actions/INoteAction/updateNote/#org.example.model.Note/PointingToDeclaration/app/org.example.actions/-i-note-action/update-note.html
+$dokka.location:org.example.actions/NoteAction///PointingToDeclaration/app/org.example.actions/-note-action/index.html
+$dokka.location:org.example.actions/NoteAction/NoteAction/#/PointingToDeclaration/app/org.example.actions/-note-action/-note-action.html
+$dokka.location:org.example.actions/NoteAction/createNote/#org.example.model.Note/PointingToDeclaration/app/org.example.actions/-note-action/create-note.html
+$dokka.location:org.example.actions/NoteAction/deleteNote/#kotlin.String#kotlin.String/PointingToDeclaration/app/org.example.actions/-note-action/delete-note.html
+$dokka.location:org.example.actions/NoteAction/getNote/#kotlin.String/PointingToDeclaration/app/org.example.actions/-note-action/get-note.html
+$dokka.location:org.example.actions/NoteAction/listNotes/#kotlin.String#kotlin.Int#kotlin.Int/PointingToDeclaration/app/org.example.actions/-note-action/list-notes.html
+$dokka.location:org.example.actions/NoteAction/updateNote/#org.example.model.Note/PointingToDeclaration/app/org.example.actions/-note-action/update-note.html
+$dokka.location:org.example.model////PointingToDeclaration/app/org.example.model/index.html
+$dokka.location:org.example.model/Note///PointingToDeclaration/app/org.example.model/-note/index.html
+$dokka.location:org.example.model/Note/Note/#kotlin.String#kotlin.String#kotlin.String#kotlin.String#java.time.Instant/PointingToDeclaration/app/org.example.model/-note/-note.html
+$dokka.location:org.example.model/Note/content/#/PointingToDeclaration/app/org.example.model/-note/content.html
+$dokka.location:org.example.model/Note/date/#/PointingToDeclaration/app/org.example.model/-note/date.html
+$dokka.location:org.example.model/Note/id/#/PointingToDeclaration/app/org.example.model/-note/id.html
+$dokka.location:org.example.model/Note/title/#/PointingToDeclaration/app/org.example.model/-note/title.html
+$dokka.location:org.example.model/Note/userId/#/PointingToDeclaration/app/org.example.model/-note/user-id.html
+$dokka.location:org.example.service////PointingToDeclaration/app/org.example.service/index.html
+$dokka.location:org.example.service/INoteService///PointingToDeclaration/app/org.example.service/-i-note-service/index.html
+$dokka.location:org.example.service/INoteService/createNote/#org.example.model.Note/PointingToDeclaration/app/org.example.service/-i-note-service/create-note.html
+$dokka.location:org.example.service/INoteService/deleteNote/#kotlin.String#kotlin.String/PointingToDeclaration/app/org.example.service/-i-note-service/delete-note.html
+$dokka.location:org.example.service/INoteService/getNote/#kotlin.String/PointingToDeclaration/app/org.example.service/-i-note-service/get-note.html
+$dokka.location:org.example.service/INoteService/listNotes/#kotlin.String#kotlin.Int#kotlin.Int/PointingToDeclaration/app/org.example.service/-i-note-service/list-notes.html
+$dokka.location:org.example.service/INoteService/updateNote/#org.example.model.Note/PointingToDeclaration/app/org.example.service/-i-note-service/update-note.html
+$dokka.location:org.example////PointingToDeclaration/app/org.example/index.html
+$dokka.location:org.example//main/#/PointingToDeclaration/app/org.example/main.html
+$dokka.location:org.example/App///PointingToDeclaration/app/org.example/-app/index.html
+$dokka.location:org.example/App/App/#/PointingToDeclaration/app/org.example/-app/-app.html
+$dokka.location:org.example/App/greeting/#/PointingToDeclaration/app/org.example/-app/greeting.html
+org.example
+org.example.actions
+org.example.model
+org.example.service
+
