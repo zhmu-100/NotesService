@@ -12,6 +12,7 @@ plugins {
     id("org.jetbrains.dokka") version "1.9.20"
     id("com.ncorti.ktfmt.gradle") version "0.11.0"
     application
+    jacoco
 }
 
 
@@ -22,7 +23,8 @@ repositories {
 
 dependencies {
     // This dependency is used by the application.
-    implementation(libs.guava)
+    implementation("com.google.guava:guava:31.1-jre")
+
     implementation("io.ktor:ktor-server-core-jvm:2.2.4")
     implementation("io.ktor:ktor-server-netty-jvm:2.2.4")
     implementation("ch.qos.logback:logback-classic:1.2.11")
@@ -38,17 +40,45 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation-jvm:2.2.4")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:2.2.4")
 
+    testImplementation(kotlin("test"))                          
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.3") 
+    testImplementation("io.mockk:mockk:1.13.5")                
+    testImplementation("io.ktor:ktor-client-mock:2.2.4")
+    testImplementation("io.ktor:ktor-server-test-host:2.2.4")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.10.0")
 
 }
 
 testing {
     suites {
-        // Configure the built-in test suite
         val test by getting(JvmTestSuite::class) {
-            // Use JUnit Jupiter test framework
-            useJUnitJupiter("5.11.3")
+            useJUnitJupiter()
+            dependencies {
+            }
         }
     }
+}
+
+tasks.withType<JacocoReport> {
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+}
+
+tasks.register<JacocoCoverageVerification>("jacocoCheckCoverage") {
+    dependsOn(tasks.test)
+    violationRules {
+        rule {
+            limit {
+                minimum = "0.60".toBigDecimal()
+            }
+        }
+    }
+}
+
+tasks.check {
+    dependsOn("jacocoCheckCoverage")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
