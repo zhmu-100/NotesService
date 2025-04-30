@@ -1,5 +1,6 @@
 package org.example.actions
 
+import io.github.cdimascio.dotenv.dotenv
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -7,7 +8,6 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
-import io.ktor.server.config.*
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.hours
@@ -31,16 +31,15 @@ import org.example.model.NotificationSnoozeEnum
  * Реализация интерфейса [INotificationAction]. Может работать с локальной БД или через API Gateway
  *
  * @see INotificationAction
- * @property config Конфигурация приложения, используется для определения адреса БД
  */
-class NotificationAction(private val config: ApplicationConfig) : INotificationAction {
+class NotificationAction : INotificationAction {
 
-  private val dbMode = config.propertyOrNull("ktor.database.mode")?.getString() ?: "LOCAL"
-  private val dbHost = config.propertyOrNull("ktor.database.host")?.getString() ?: "localhost"
-  private val dbPort = config.propertyOrNull("ktor.database.port")?.getString() ?: "8080"
-
+  private val dotenv = dotenv()
+  private val dbMode = dotenv["DB_MODE"] ?: "LOCAL"
+  private val dbHost = dotenv["DB_HOST"] ?: "localhost"
+  private val dbPort = dotenv["DB_PORT"] ?: "8080"
   private val baseUrl =
-      if (dbMode == "gateway") {
+      if (dbMode.equals("gateway", true)) {
         "http://$dbHost:$dbPort/api/db"
       } else {
         "http://$dbHost:$dbPort"
