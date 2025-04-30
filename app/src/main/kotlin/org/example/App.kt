@@ -1,5 +1,6 @@
 package org.example
 
+import io.github.cdimascio.dotenv.dotenv
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
@@ -18,16 +19,18 @@ import org.example.service.NotificationService
  * Дефолтный порт - 8001
  */
 fun main() {
-  embeddedServer(Netty, port = 8001) {
+  val dotenv = dotenv()
+  val port = dotenv["SERVICE_PORT"]?.toIntOrNull() ?: 8001
+  embeddedServer(Netty, port = port) {
         install(ContentNegotiation) { json() }
 
         // notes
-        val noteAction = NoteAction(environment.config)
+        val noteAction = NoteAction()
         val noteService = NoteService(noteAction)
         registerNoteRoutes(noteService)
 
         // notifications
-        val notificationAction = NotificationAction(environment.config)
+        val notificationAction = NotificationAction()
         val notificationService = NotificationService(notificationAction)
         registerNotificationRoutes(notificationService)
       }
