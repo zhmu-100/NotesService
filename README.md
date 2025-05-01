@@ -5,11 +5,11 @@
 Default configuration for this microservice in env:
 
 ```
-PORT=8001
+SERVICE_PORT=8001
 
 DB_MODE=LOCAL        # LOCAL or gateway
 DB_HOST=localhost
-DB_PORT=8081
+DB_PORT=8082
 ```
 
 Default port for this service is 8081. [App.kt](app/src/main/kotlin/org/example/App.kt)/
