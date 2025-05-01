@@ -9,8 +9,7 @@ PORT=8001
 
 DB_MODE=LOCAL        # LOCAL or gateway
 DB_HOST=localhost
-DB_PORT=5432
-
+DB_PORT=8081
 ```
 
 Default port for this service is 8081. [App.kt](app/src/main/kotlin/org/example/App.kt)/
