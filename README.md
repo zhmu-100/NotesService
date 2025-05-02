@@ -10,6 +10,11 @@ SERVICE_PORT=8001
 DB_MODE=LOCAL        # LOCAL or gateway
 DB_HOST=localhost
 DB_PORT=8082
+
+# Redis
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_PASSWORD=
 ```
 
 Default port for this service is 8081. [App.kt](app/src/main/kotlin/org/example/App.kt)/
