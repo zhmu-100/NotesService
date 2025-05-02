@@ -22,7 +22,7 @@ class NoteActionTest {
 
   @BeforeEach
   fun setUp() {
-    server = MockWebServer().apply { start(InetAddress.getByName("127.0.0.1"), 8082) }
+    server = MockWebServer().apply { start(InetAddress.getByName("127.0.0.1"), 8081) }
     action = NoteAction()
   }
 

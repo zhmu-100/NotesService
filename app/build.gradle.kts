@@ -19,6 +19,8 @@ plugins {
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+    maven { url = uri("https://jitpack.io") }
+
 }
 
 dependencies {
@@ -29,6 +31,9 @@ dependencies {
     implementation("io.ktor:ktor-server-netty-jvm:2.2.4")
     implementation("ch.qos.logback:logback-classic:1.2.11")
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
+    
+   	implementation("com.github.poplopok:Logger:1.0.6")
+
 
 
     implementation("io.ktor:ktor-server-content-negotiation-jvm:2.2.4")
