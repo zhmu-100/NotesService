@@ -19,7 +19,7 @@ import org.example.service.NotificationService
  * Дефолтный порт - 8001
  */
 fun main() {
-  val dotenv = dotenv()
+  val dotenv = dotenv { ignoreIfMissing = true }
   val port = dotenv["SERVICE_PORT"]?.toIntOrNull() ?: 8001
   embeddedServer(Netty, port = port) {
         install(ContentNegotiation) { json() }

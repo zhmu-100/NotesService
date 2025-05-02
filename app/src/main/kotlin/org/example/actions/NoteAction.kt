@@ -26,7 +26,7 @@ import org.example.model.Note
  */
 class NoteAction : INoteAction {
 
-  private val dotenv = dotenv()
+  private val dotenv = dotenv { ignoreIfMissing = true }
   private val dbMode = dotenv["DB_MODE"] ?: "LOCAL"
   private val dbHost = dotenv["DB_HOST"] ?: "localhost"
   private val dbPort = dotenv["DB_PORT"] ?: "8080"

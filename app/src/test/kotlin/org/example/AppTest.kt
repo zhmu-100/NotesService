@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test
 
 fun Application.testModule() {
   install(ContentNegotiation) { json() }
-  val env = dotenv()
+  val env = dotenv { ignoreIfMissing = true }
   env.entries().forEach { entry -> System.setProperty(entry.key, entry.value) }
 
   val noteAction = NoteAction()
