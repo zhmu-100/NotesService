@@ -11,6 +11,11 @@ jobs:
   test:
     name: Run Unit Tests
     runs-on: ubuntu-latest
+    env:
+      DB_MODE: LOCAL
+      DB_HOST: 127.0.0.1
+      DB_PORT: "8082"
+      SERVICE_PORT: "8001"
 
     steps:
       - name: Checkout repository
