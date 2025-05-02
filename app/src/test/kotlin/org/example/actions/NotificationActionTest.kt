@@ -1,8 +1,6 @@
 package org.example.actions
 
-import io.ktor.server.config.MapApplicationConfig
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
+import java.net.InetAddress
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -21,23 +19,19 @@ import org.example.dto.DbResponse
 import org.example.model.Notification
 import org.example.model.NotificationActionEnum
 import org.example.model.NotificationSnoozeEnum
+import org.junit.jupiter.api.*
 
 class NotificationActionTest {
   private lateinit var server: MockWebServer
   private lateinit var action: NotificationAction
 
-  @BeforeTest
+  @BeforeEach
   fun setUp() {
-    server = MockWebServer().apply { start() }
-    val config =
-        MapApplicationConfig(
-            "ktor.database.mode" to "LOCAL",
-            "ktor.database.host" to server.hostName,
-            "ktor.database.port" to server.port.toString())
-    action = NotificationAction(config)
+    server = MockWebServer().apply { start(InetAddress.getByName("127.0.0.1"), 8082) }
+    action = NotificationAction()
   }
 
-  @AfterTest
+  @AfterEach
   fun tearDown() {
     server.shutdown()
   }

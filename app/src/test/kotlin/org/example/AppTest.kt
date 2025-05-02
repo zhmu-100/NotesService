@@ -1,5 +1,6 @@
 package org.example
 
+import io.github.cdimascio.dotenv.dotenv
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -16,14 +17,14 @@ import org.junit.jupiter.api.Test
 
 fun Application.testModule() {
   install(ContentNegotiation) { json() }
+  val env = dotenv()
+  env.entries().forEach { entry -> System.setProperty(entry.key, entry.value) }
 
-  // notes
-  val noteAction = NoteAction(environment.config)
+  val noteAction = NoteAction()
   val noteService = NoteService(noteAction)
   registerNoteRoutes(noteService)
 
-  // notifications
-  val notificationAction = NotificationAction(environment.config)
+  val notificationAction = NotificationAction()
   val notificationService = NotificationService(notificationAction)
   registerNotificationRoutes(notificationService)
 }
