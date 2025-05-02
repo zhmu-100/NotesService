@@ -1,6 +1,6 @@
 package org.example.actions
 
-import io.ktor.server.config.MapApplicationConfig
+import java.net.InetAddress
 import kotlin.test.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.LocalDateTime
@@ -13,8 +13,7 @@ import org.example.dto.DbCreateRequest
 import org.example.dto.DbNoteRow
 import org.example.dto.DbResponse
 import org.example.model.Note
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Test
 
 class NoteActionTest {
@@ -23,13 +22,8 @@ class NoteActionTest {
 
   @BeforeEach
   fun setUp() {
-    server = MockWebServer().apply { start() }
-    val config =
-        MapApplicationConfig(
-            "ktor.database.mode" to "LOCAL",
-            "ktor.database.host" to server.hostName,
-            "ktor.database.port" to server.port.toString())
-    action = NoteAction(config)
+    server = MockWebServer().apply { start(InetAddress.getByName("127.0.0.1"), 8082) }
+    action = NoteAction()
   }
 
   @AfterEach
@@ -47,11 +41,10 @@ class NoteActionTest {
 
     val now = LocalDateTime(2000, 1, 1, 0, 0)
     val input = Note(id = "id0", userId = "user1", title = "T", content = "C", date = now)
-
     val result = action.createNote(input)
 
-    assertTrue(result.id.isNotBlank(), "ID should be generated and non-blank")
-    assertTrue(result.date >= now, "Date should be updated to now or later")
+    assertTrue(result.id.isNotBlank())
+    assertTrue(result.date >= now)
     assertEquals(input.userId, result.userId)
     assertEquals(input.title, result.title)
     assertEquals(input.content, result.content)

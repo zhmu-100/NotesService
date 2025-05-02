@@ -48,7 +48,7 @@ dependencies {
     testImplementation("io.ktor:ktor-client-mock:2.2.4")
     testImplementation("io.ktor:ktor-server-test-host:2.2.4")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.10.0")
-
+    testImplementation("org.junit-pioneer:junit-pioneer:2.2.0")
 }
 
 testing {
