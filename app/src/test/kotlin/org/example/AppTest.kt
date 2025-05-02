@@ -19,14 +19,15 @@ fun Application.testModule() {
   install(ContentNegotiation) { json() }
   val env = dotenv { ignoreIfMissing = true }
   env.entries().forEach { entry -> System.setProperty(entry.key, entry.value) }
+  val logger = ConsoleLogger()
 
   val noteAction = NoteAction()
   val noteService = NoteService(noteAction)
-  registerNoteRoutes(noteService)
+  registerNoteRoutes(noteService, logger)
 
   val notificationAction = NotificationAction()
   val notificationService = NotificationService(notificationAction)
-  registerNotificationRoutes(notificationService)
+  registerNotificationRoutes(notificationService, logger)
 }
 
 class AppTest {
