@@ -15,7 +15,7 @@ services:
       - app-data:/app/data
       - app-logs:/app/logs
       # - ./config/${DEPLOYMENT_ENV:-development}/${SERVICE_NAME:-notes-service}.conf:/app/config/application.conf
-      - ./${SERVICE_NAME}.conf:/app/config/application.conf
+      # - ./${SERVICE_NAME}.conf:/app/config/application.conf
       - ./${SERVICE_NAME:-notes-service}.env:/app/.env
       - ./${SERVICE_NAME:-notes-service}.env:/.env
     networks:
