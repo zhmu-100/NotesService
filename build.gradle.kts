@@ -95,6 +95,21 @@ java {
     }
 }
 
+tasks.jar {
+  manifest {
+    attributes["Main-Class"] = application.mainClass.get()
+  }
+  duplicatesStrategy = DuplicatesStrategy.INCLUDE
+  from({
+    configurations
+      .runtimeClasspath
+      .get()
+      .filter { it.name.endsWith(".jar") }
+      .map { zipTree(it) }
+  })
+}
+
+
 application {
     // Define the main class for the application.
     mainClass = "org.example.AppKt"
